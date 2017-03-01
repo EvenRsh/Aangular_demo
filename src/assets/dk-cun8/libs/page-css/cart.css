@@ -1,2 +1,0 @@
-tbody>tr>td span{padding: 5px;}
-tbody>tr>td span:not(:nth-child(2)){border: solid 1px #ccc; cursor: pointer;}
