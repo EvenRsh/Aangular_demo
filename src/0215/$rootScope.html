@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="mApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>{{title}}</title>
+	</head>
+
+	<body>
+		<!--view-->
+		<div ng-controller="indexCtrl">
+			<p>{{name}}</p>
+			<input ng-model="name" /> {{title}}
+		</div>
+		<!--<div ng-controller="index2Ctrl">
+			<p>{{name}}</p>
+			<input ng-model="name" /> {{title}} {{a}}
+		</div>-->
+		<p>{{abc}}</p>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('mApp', []);
+	</script>
+	<script src="js/indexCtrl.js"></script>
+	<script src="js/indexCtrl2.js"></script>
+</html>

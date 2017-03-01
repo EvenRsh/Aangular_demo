@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="myFilterApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="js/angular.js"></script>
+
+	<body ng-controller="indexCtrl">
+		<input ng-model="search" ng-keyup="makeRed()" />
+		<div ng-bind-html="htmlSced"></div>
+	</body>
+	<script>
+		var app = angular.module('myFilterApp', []);
+		app.controller('indexCtrl', ['$scope', '$sce', '$filter','$rootScope', function($scope, $sce, $filter,$rootScope) {
+			$scope.html = 'abcdeabc';
+			$scope.htmlSced = $sce.trustAsHtml($scope.html);
+			$scope.makeRed = function(){
+				var html = $filter('wscat')($scope.html, $scope.search);
+				$scope.htmlSced = $sce.trustAsHtml(html);
+			}
+		}])
+		app.filter('wscat', [function() {
+			return function(input, value) {
+				console.log('html:' + input);//abcdefgif
+				console.log('search:' + value);//ab
+				//<span style="color:red">ab</span>cdefgif
+				//var str = input;
+				var arr = input.split(value);
+				console.log(arr);
+				//arr[0]+'<span style="color:red">'+value+'</span>'+arr[1]
+				var makeRed = '<span style="color:red">'+value+'</span>';
+				var output = arr.join(makeRed);
+				//console.log(output)
+				return output;
+			}
+		}])
+	</script>
+
+</html>

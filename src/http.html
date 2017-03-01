@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="httpApp">
+<head>
+	<meta charset="UTF-8">
+	<title>http</title>
+	<script type="text/javascript" src="js/angular.js"></script>
+	<script type="text/javascript">
+		var app = angular.module(`httpApp`,[`controllers`,`servicess`]);
+		var httpCtrl = angular.module(`controllers`,[]);
+		httpCtrl.controller(`indexCtrl`,[`$scope`,`http`,($scope,http)=>{
+			$scope.name = `rh`;
+			http.get(`test.php`).success(function(data){
+				console.log(data);
+			});
+		}]);
+		var httpService = angular.module(`servicess`,[]);
+		httpService.service(`http`,()=>{
+			this.xmlhttp = new XMLHttpRequest();
+			this.get=(url)=>{
+				xmlhttp = this.xmlhttp;
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+				return this;
+			};
+			this.success=(callback)=>{
+				xmlhttp = this.xmlhttp;
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						callback(xmlhttp.responseText);
+					}
+				}
+			}
+			return this;	
+		});
+	</script>
+</head>
+<body ng-controller="indexCtrl">
+	<p>{{name}}</p>
+</body>
+</html>

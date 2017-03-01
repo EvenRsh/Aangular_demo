@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="serApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body ng-controller="indexCtrl">
+		<p style="color: red;">$window</p>
+		<p id="test">{{name}}</p>
+
+		<p style="color: red;">$timeout</p>
+		<p>{{num}}</p>
+
+		<p style="color: red;">$interval</p>
+		<p>{{num2}}</p>
+
+		<p style="color: red;">$document</p>
+		<p id="doc">{{num2}}</p>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('serApp', []);
+		app.controller('indexCtrl',
+			function($scope, $http, $sce, $rootScope, $filter, $window, $timeout, $interval, $document, $location) {
+				$scope.name = 'yao';
+				console.log($window);
+				console.log($window.document.getElementById('test'))
+				$window.document.getElementById('test').style.color = 'red';
+				//$window.location.href = '';
+				console.log(window.document.getElementById('test'));
+
+				$scope.num = 0;
+				$scope.num2 = 0;
+				var time = $timeout(function() {
+					$scope.num++;
+				}, 1000)
+				$timeout.cancel(time);
+				$interval(function() {
+					$scope.num2++
+				}, 1000)
+
+				$document[0].getElementById('doc').style.fontSize = '25px';
+				console.log($location);
+				$http.jsonp('jsonp.php', {
+					params: {
+						callback: 'JSON_CALLBACK'
+					}
+				}).success(function(data) {
+					console.log(data);
+				})
+				//jsonp动态生成script，利用script的src拥有跨域的权限，拿到后端返回的一个带有数据的函数，然后前端在执行，并获取数据
+			})
+	</script>
+
+</html>

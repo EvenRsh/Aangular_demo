@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="directiveApp">
+<head>
+	<meta charset="UTF-8">
+	<title>directive</title>
+	<script type="text/javascript" src="js/angular.js"></script>
+	<script type="text/javascript">
+		var app = angular.module(`directiveApp`,[`controllers`,`servicess`,`directives`]);
+		var httpCtrl = angular.module(`controllers`,[]);
+		httpCtrl.controller(`indexCtrl`,[`$scope`,`http`,($scope,http)=>{
+			$scope.name = "xie";
+			$scope.abc = true;
+			$scope.test = function(){
+				console.log("aaa");
+			};
+			http.get(`test.php`).success(function(data){
+				// console.log(data);
+			});
+		}]);
+		var httpService = angular.module(`servicess`,[]);
+		httpService.service(`http`,()=>{
+			this.xmlhttp = new XMLHttpRequest();
+			this.get=(url)=>{
+				xmlhttp = this.xmlhttp;
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+				return this;
+			};
+			this.success=(callback)=>{
+				xmlhttp = this.xmlhttp;
+				xmlhttp.onreadystatechange = function() {
+					if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						callback(xmlhttp.responseText);
+					}
+				}
+			}
+			return this;	
+		});
+		var directives = angular.module(`directives`,[]);
+		directives.directive(`xheader`,[()=>{
+			return{
+
+				template : `<h1 ng-click="test()">{{name}}</h1><p>{{abc}}</p>`,
+				scope:{
+					abc:"@",
+					name:"=",
+					test:"&"
+				},
+				link:(scope,ele,attr)=>{
+					console.log(typeof scope.abc);
+				}
+			}
+		}])
+		// directives.directive(`ngNav`,[function(){
+		// 	return{
+		// 		scope:{
+
+		// 		}
+		// 		// link:(scope,ele,attr)=>{
+		// 		// 	// scope.name="yao";
+		// 		// 	console.log(scope);
+		// 		// 	scope.abc=`123`;
+		// 		// 	ele.find(`p`).css({color:`red`});
+		// 		// 	// console.log(attr.ngNav)
+		// 		// 	// console.log(scope[attr.ngNav]);
+		// 		// 	if(scope[attr.ngNav]){
+		// 		// 		console.log('123')
+		// 		// 	}else{
+		// 		// 		console.log('1231231313')
+		// 		// 	}
+		// 		// }
+		// 	}
+		// }])
+	</script>
+</head>
+<body ng-controller="indexCtrl">
+	<input type="" ng-model="name" name="">
+	<p>{{name}}</p>
+	<p>{{abc}}</p>
+	<!-- <div xheader></div> -->
+
+	<xheader name="name" test="test()" abc="{{abc}}"></xheader>
+	<!-- <div ngNav>
+		<input type="" ng-model="name" name="">
+		<p>{{abc}}</p>
+		<p>{{name}}</p>
+	</div> -->
+</body>
+</html>

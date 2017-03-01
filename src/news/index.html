@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="newsApp">
+	<head>
+		<meta charset="UTF-8">
+		<!--用在移动端，把PC端比例，1:1还原在移动端显示-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="css/weui.css" />
+	<link rel="stylesheet" href="css/swiper.css" />
+	<body>
+		<div ui-view=""></div>
+	</body>
+	<script src="js/angular.js"></script>
+	<!--ui路由-->
+	<script src="js/angular-ui-router.js"></script>
+	<!--修复post请求的模块-->
+	<script src="js/ng-post.js"></script>
+	<!--轮播图-->
+	<script src="js/swiper.js"></script>
+	<script src="dist/js/core.js"></script>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button onclick="callbackJsonp('js/jsonp.js')">jsonp</button>
+	</body>
+	<script>
+		function JSON_CALLBACK(data){
+			console.log(data)
+		}
+	</script>
+	<script>
+		function callbackJsonp(url){
+			var script = document.createElement('script');
+			script.src = url;
+			document.body.appendChild(script);
+		}
+	</script>
+	<!--<script src="js/jsonp.js"></script>
+	<script src="js/jsonp2.js"></script>-->
+</html>

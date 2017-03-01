@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分享</title>
+	<style>
+		.chosen{
+			color:red;
+			font-size: 20px;
+			font-weight: bold
+		}
+	</style>
+	<script type="text/javascript" src='vue.js'></script>
+	<script src="axios.js"></script>
+</head>
+<body>
+	<div id="app">
+		<fieldset>
+            <legend>
+                Create New Person
+            </legend>
+            <div class="form-group">
+                <label>姓名:</label>
+                <input type="text" v-model="newPerson.name"/>
+            </div>
+            <div class="form-group">
+                <label>年龄:</label>
+                <input type="text" v-model="newPerson.age"/>
+            </div>
+            <div class="form-group">
+                <label>性别:</label>
+                <select v-model="newPerson.gender">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+            </div>
+            <div class="form-group">
+                <label></label>
+                <button @click="addPerson">Create</button>
+            </div>
+        </fieldset>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(x,$index) in person" :class="{chosen:x.chosen}">
+                    <td @click="toggle(x)">{{ x.name }}</td>
+                    <td>{{ x.age }}</td>
+                    <td>{{ x.gender }}</td>
+                    <td><button @click="delPerson($index)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+	</div>
+	
+	<script type="text/javascript">
+
+	//注册组件
+	// Vue.component('list', {
+	// 	  template: '\
+	// 	    <tr>\
+	// 	      <td @click="$emit(toggle(title))">{{ title.name}}</td><td>{{ title.age}}</td><td>{{ title.gender}}</td>\
+	// 	      <button v-on:click="$emit(delPerson(value))">X</button>\
+	// 	    </tr>\
+	// 	  ',
+	// 	  props: ['title','value','num'],
+	// 	  methods:{
+	// 			//切换class
+	// 			toggle:(item) => {item.chosen = !item.chosen}
+	// 			,
+	// 			delPerson:function(idx){
+	// 				console.log(this.num)
+	// 				//删除person对应的数据
+	// 				 this.num.splice(idx,1)
+	// 			}
+	// 		},
+	// })
+
+
+
+	//实例化对象
+		var vm = new Vue({
+			el:'#app',
+			data:{
+				newPerson:{
+					name:'',
+					age:0,
+					gender:'男'
+				},
+				
+					person:[]
+			},
+			//实例已经创建完成之后被调用
+			created:function(){
+				//ajax请求数据
+				//从2.0开始使用axios，之前版本使用vue-resource
+				axios.get('list.json').then((res)=>{
+					//person赋值
+					this.person = res.data;
+				})
+			},
+			methods:{
+				//切换class
+				toggle:(item) => {item.chosen = !item.chosen}
+				,
+				addPerson:function(){
+					//插入newPerson数据
+					this.person.push(this.newPerson);
+					//重新更新newPweson
+					this.newPerson = {name:'',age:18,gender:'男'};
+				},
+				delPerson:function(idx){
+				// 	//删除person对应的数据
+					 this.person.splice(idx,1)
+				}
+			},
+		})
+
+	</script>
+</body>
+</html>

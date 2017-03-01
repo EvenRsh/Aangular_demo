@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="filterApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<p style="color: red;">uppercase</p>
+			<p>{{name|uppercase}}</p>
+			<p style="color: red;">lowercase</p>
+			<p>{{name|lowercase}}</p>
+			<p style="color: red;">currency</p>
+			<p>{{num|currency:'&yen;'}}</p>
+			<p>￥{{num}}</p>
+			<p style="color: red;">number</p>
+			<p>{{num|number:1}}</p>
+			<p style="color: red;">date</p>
+			<p>{{date|date:'yyyy MM-dd-hh:mm:ss EEEE'}}</p>
+
+			<p style="color: red;">filter</p>
+			<input ng-model="search2" />
+			<select ng-model="search1">
+				<option value="name">name</option>
+				<option value="age">age</option>
+			</select>
+			<ul ng-show="search1=='name'">
+				<li ng-repeat="arr in arrs|filter:{name:search2}">name:{{arr.name}} age:{{arr.age}}</li>
+			</ul>
+			<ul ng-show="search1=='age'">
+				<li ng-repeat="arr in arrs|filter:{age:search2}">name:{{arr.name}} age:{{arr.age}}</li>
+			</ul>
+
+			<p style="color: red;">orderBy</p>
+			<button ng-click="sort=!sort">排序</button>
+			<ul>
+				<li ng-repeat="arr in arrs|orderBy:'name':sort">name:{{arr.name}} age:{{arr.age}}</li>
+			</ul>
+
+			<input ng-model="search2" />
+			<select ng-model="search1">
+				<option value="name">name</option>
+				<option value="age">age</option>
+			</select>
+			<button ng-click="sort=!sort">排序</button>
+			<ul ng-show="search1=='name'">
+				<li ng-repeat="arr in arrs|filter:{name:search2}|orderBy:'name':sort">name:{{arr.name}} age:{{arr.age}}</li>
+			</ul>
+			<ul ng-show="search1=='age'">
+				<li ng-repeat="arr in arrs|filter:{age:search2}|orderBy:'age':sort">name:{{arr.name}} age:{{arr.age}}</li>
+			</ul>
+
+			<p style="color: red;">limitTo</p>
+			<!--limitTo:截取的长度   截取的起始坐标-->
+			<p>{{name|limitTo:-2:2}}...</p>
+
+			<p style="color: red;">json</p>
+			<p>{{obj|json}}</p>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('filterApp', []);
+		app.controller('indexCtrl', ['$scope', function($scope) {
+			$scope.name = 'AbCd';
+			//$scope.name = $scope.name.toUpperCase()
+			$scope.num = 12345;
+			$scope.date = 1487131307000;
+			$scope.arrs = [{
+				name: 'xie',
+				age: 30
+			}, {
+				name: 'lan',
+				age: 26
+			}, {
+				name: 'yao',
+				age: 26
+			}, {
+				name: 'yi',
+				age: 18
+			}, {
+				name: 'ming',
+				age: 16
+			}];
+			$scope.search1 = '';
+			$scope.search2 = '';
+			$scope.sort = true;
+			$scope.obj = {
+				name: 'abc',
+				age: 12,
+				skill: 'ps'
+			}
+		}])
+	</script>
+
+</html>

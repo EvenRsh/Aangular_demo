@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="libs/swiper/swiper.min.css">
+	<link rel="stylesheet" type="text/css" href="libs/common/common.css">
+	<link rel="stylesheet" type="text/css" href="libs/page-css/cart.css">
+
+	<script type="text/javascript" src="libs/jquery/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="libs/swiper/swiper.min.js"></script>
+	<script type="text/javascript" src="libs/jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="libs/common/common.js"></script>
+	<script type="text/javascript" src="libs/common/guid.js"></script>
+	<script type="text/javascript" src="libs/page-js/cart.js"></script>
+
+</head>
+<body>
+<div class="bs-example">
+    <table class="table">
+      <caption>Optional table caption.</caption>
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="all" /></th>
+          <th>名称</th>
+          <th>单价</th>
+          <th>数量</th>
+          <th>小计</th>
+          <th>删除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" /></td>
+          <td dk-bind="proName">Mark</td>
+          <td dk-bind="price">Otto</td>
+          <td><span>-</span><span dk-bind="count"></span><span>+</span></td>
+          <td dk-bind="price * count">@mdo</td>
+          <td><input type="button" value="del" /></td>
+        </tr>
+      </tbody>
+      <tfoot>
+      	<tr><th colspan="6"></th></tr>
+      </tfoot>
+    </table>
+  </div>	
+  <script type="text/javascript">
+  	$(function(){
+
+      var cartObj = $('tbody>tr').cart();
+
+  		$('tbody>tr').click(function(evt){
+  			if($(evt.target).is(':checkbox')){
+  				cartObj.calculation();
+  			} else if($(evt.target).is(':button')){
+  				cartObj.del(evt);
+  			} else if($(evt.target).is('span')){
+  				cartObj.resetCount(evt);
+  			}
+  		})
+  	})
+  </script>
+</body>
+</html>

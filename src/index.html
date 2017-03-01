@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="indexApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>angular初步学习</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    ul {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        width: 300px;
+        height: 30px;
+        /*border: 1px solid #ccc;*/
+        margin: 20px auto 0;
+    }
+    
+    li {
+        /*flex:1;*/
+        padding: 0 10px;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid #ccc;
+    }
+    
+    li:not(:last-child) {
+        /*border-right: 1px solid #f00;*/
+    }
+    
+    .content,
+    .content>div {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        line-height: 300px;
+        border: 1px solid #ccc;
+        margin: 0 auto;
+    }
+    
+    .content>div {
+        /*position: absolute;*/
+        /*display: none;*/
+        text-align: center;
+        font-size: 40px;
+        color: #f00;
+        background-color: #fff;
+    }
+    
+    .content .selected {
+        display: block;
+        background-color: #e50de2;
+    }
+    
+    .btn {
+        background-color: blue;
+    }
+    </style>
+    <script src="js/angular.js"></script>
+    <script src="assets/jQuery/jquery-3.1.1.js"></script>
+</head>
+
+<body>
+    <div ng-controller="indexCtrl">
+       <p>{{newsTitle|myfilter:23}}</p>
+    </div>
+    <div ng-controller="index2Ctrl">
+        <p>{{a}}</p>
+        <p>{{num|currency:"&yen;"}}</p>
+        <p>{{title|uppercase}}</p>
+        <p>{{title|lowercase}}</p>
+        <input type="text" ng-model="search">
+        <select ng-model="search2">
+            <option value="name">name</option>
+            <option value="age">age</option>
+        </select>
+        <button ng-click="sort=false">升序</button>
+        <button ng-click="sort=true">降序</button>
+        <ul ng-if="search2 == 'name'">
+            <li ng-repeat="arr in arrs|filter:{name:search}|orderBy:'name':sort">name:{{arr.name}} age:{{arr.age}}</li>
+        </ul>
+        <ul ng-if="search2 == 'age'">
+            <li ng-repeat="arr in arrs|filter:{age:search}|orderBy:'age':sort">name:{{arr.name}} age:{{arr.age}}</li>
+        </ul>
+        <p>{{title|limitTo:2:1}}</p>
+        <p>{{title|myfilter:1231}}</p>
+    </div>
+</body>
+<script type="text/javascript">
+// console.log(angular);
+/*
+    1.定义第一个模块,定义2个参数,1.模块名,2.数组(存储其他需要依赖的模块名字,当前模块需要依赖别的模块的话)
+    2. ng-app="moduleOne"是主模块的作用域,跟angular.module(`moduleOne`,[])
+    3. ng-controller="indexC" 是主模块下分模块的作用域,跟angular.module(`moduleOne`,[])
+*/
+
+
+let app = angular.module(`indexApp`, []);
+let func = ($scope, $http, $rootScope) => {
+    $scope.titles = ["新闻", "视频", "军事"];
+    $scope.newsTitle = `新闻`;
+    $scope.videoTitle = `视频`;
+    $scope.warTitle = `军事`;
+    $scope.selected = false;
+    $scope.input = 'RH';
+    $scope.switchName = "a";
+    $scope.myText = "a@123.com";
+    // $scope.btn = function(){
+    //      $http.get(`./test.php`,{
+    //         params:{
+    //             name:$scope.input
+    //         }
+    //      }).then(function(res){
+    //         console.log(res.data);
+    //         // console.log( $scope.input);
+    //     },function(error){
+    //         console.log(error);
+    //     });
+    // }
+    // $scope.tab = function(){
+    //     console.log( $scope.selected);
+    //     $scope.selected = !$scope.selected;
+    // }
+    // $http.get(`./index.json`).then(function(res){
+    //     console.log(res);
+    //     $scope.contents = res.data;
+    // },function(error){
+    //     console.log(error);
+    // })
+    $scope.tab = function(page) {
+        $scope.switchName = page;
+        $scope.selected = !$scope.selected;
+        console.log(page);
+    }
+    $rootScope.name = "根作用域";
+};
+let func2 = ($scope, $http, $rootScope) => {
+    $scope.a = $rootScope.name;
+    $scope.num = 1998;
+    $scope.title = "AbCd";
+    $scope.arrs = [{
+            name: 'xie',
+            age: 30
+        }, {
+            name: 'lan',
+            age: 25
+        }, {
+            name: 'yao',
+            age: 20
+        }, {
+            name: 'yi',
+            age: 20
+        }, {
+            name: 'ming',
+            age: 18
+        }
+    ];
+    $scope.search = '';
+    $scope.search2 = 'name';
+    $scope.sort = true;
+};
+let first = () => {
+    let directive = {
+        restrict: "EAC",
+        template: `switchName:{{switchName}}`
+    };
+    return directive;
+}
+let myfilter = ($http,$rootScope)=>{
+    return (input,a)=>{
+        return input + a;
+    }
+}
+app.controller(`indexCtrl`, [`$scope`, `$http`, `$rootScope`, func]);
+app.controller(`index2Ctrl`, [`$scope`, `$http`, `$rootScope`, func2]);
+app.directive(`firstDirective`, first);
+app.filter(`myfilter`,[`$http`,`$rootScope`,myfilter]);
+</script>
+
+</html>

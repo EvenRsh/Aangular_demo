@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="serApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<p>{{name|ed}}</p>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		;(function() {
+			angular.module('serApp', ['services', 'filters', 'controllers']);
+		})();
+		
+		;(function() {
+			angular.module('controllers', []).controller('indexCtrl', function($scope, $http, tool) {
+				$scope.name = 'yao';
+				console.log(tool)
+			})
+		})();
+
+		;
+		(function() {
+			angular.module('services', []).service('tool', function() {
+				return {
+					add: function(a, b) {
+						return a + b;
+					}
+				}
+			})
+		})();
+
+		;
+		(function() {
+			angular.module('filters', []).filter('ed', function() {
+				return function(input) {
+					return input + 'ed';
+				}
+			})
+		})();
+	</script>
+
+</html>
