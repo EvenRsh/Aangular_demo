@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="rApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		.wscat {
+			transition: all 1.5s linear;
+		}
+		
+		.wscat.ng-enter {
+			animation: abcIn 1.5s ease
+		}
+		
+		.wscat.ng-leave {
+			animation: abcOut 1.5s ease
+		}
+		
+		@keyframes abcIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+		
+		@keyframes abcOut {
+			from {
+				opacity: 1;
+			}
+			to {
+				opacity: 0;
+			}
+		}
+	</style>
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<!--<p ng-if="bool" class="wscat">{{name}}</p>-->
+			<p ng-if="bool" class="pop">{{name}}</p>
+			<button ng-click="show()">Ok</button>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<script>
+		var app = angular.module('rApp', ['ngAnimate']);
+		console.log(app)
+		app.controller('indexCtrl', function($scope) {
+				$scope.name = '123'
+				$scope.bool = true
+				$scope.show = function() {
+					$scope.bool = !$scope.bool
+				}
+			})
+			//第一个参数是类的名字
+		app.animation(".pop", ["$animateCss", function($animateCss) {
+			return {
+				enter: function(element) {
+					return $animateCss(element, {
+						from: {
+							opacity: 0
+						},
+						to: {
+							opacity: 1
+						},
+						duration: 1.5
+					})
+
+				},
+				leave: function(element) {
+					return $animateCss(element, {
+						from: {
+							opacity: 1
+						},
+						to: {
+							opacity: 0
+						},
+						duration: 1.5
+					})
+
+				}
+			}
+		}])
+	</script>
+
+</html>

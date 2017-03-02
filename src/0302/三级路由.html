@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html ng-app="routeApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<link rel="stylesheet" href="css/weui.css" />
+	<style>
+		.pop {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+		}
+		
+		.pop.ng-enter,
+		.pop.ng-leave {
+			-webkit-transition: all 1s ease;
+			transition: all 1s ease;
+		}
+		
+		.pop.ng-enter {
+			-webkit-transform: scale(0);
+			transform: scale(0);
+		}
+		
+		.pop.ng-enter-active,
+		.pop.ng-leave,
+		.pop.ng-leave-active {
+			-webkit-transform: scale(1);
+			transform: scale(1);
+		}
+		
+		.pop.ng-leave-active {}
+	</style>
+
+	<body>
+		<div ui-view="" class="pop" style="height: 667px;"></div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-ui-router.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<script>
+		var app = angular.module('routeApp', ['ui.router', 'ngAnimate']);
+		app.config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider) {
+			$stateProvider.state('index', {
+				url: '/index',
+				templateUrl: 'template/index.html'
+			}).state('index.a', {
+				url: '/a',
+				templateUrl: 'template/a.html'
+			}).state('index.b', {
+				url: '/b',
+				templateUrl: 'template/b.html'
+			}).state('index.a.aa', {
+				url: '/aa',
+				templateUrl: 'template/aa.html'
+			})
+		}])
+	</script>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="rApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		.rotate {
+			-webkit-animation-duration: 1s;
+		}
+		
+		.ng-leave.rotate {
+			-webkit-animation-name: rotate-leave;
+		}
+		
+		.ng-enter.rotate {
+			-webkit-animation-name: rotate-enter;
+		}
+		
+		@-webkit-keyframes rotate-leave {
+			0% {
+				-webkit-transform-origin: center center;
+				-webkit-transform: rotate(0);
+				opacity: 1;
+			}
+			100% {
+				-webkit-transform-origin: center center;
+				-webkit-transform: rotate(-180deg);
+				opacity: 0;
+			}
+		}
+		
+		@-webkit-keyframes rotate-enter {
+			0% {
+				-webkit-transform-origin: center center;
+				-webkit-transform: rotate(-180deg);
+				opacity: 0;
+			}
+			100% {
+				-webkit-transform-origin: center center;
+				-webkit-transform: rotate(-360deg);
+				opacity: 1;
+			}
+		}
+	</style>
+
+	<body>
+		<a href="#/index">index</a>
+		<a href="#/home">home</a>
+		<div ng-view="" class="rotate" style="position: absolute; top: 50px;"></div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-route.js"></script>
+	<script src="js/angular-animate.js"></script>
+	<script>
+		var app = angular.module('rApp', ['ngRoute', 'ngAnimate']);
+		app.config(['$routeProvider', function($routeProvider) {
+			$routeProvider.when('/index', {
+				templateUrl: 'template/a.html'
+			}).when('/home', {
+				templateUrl: 'template/b.html'
+			})
+		}])
+	</script>
+
+</html>
