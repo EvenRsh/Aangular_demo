@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<input v-model="que" />
+			<button @click="getDataa">Ok</button>
+			<p>{{name}}</p>
+		</div>
+		
+	</body>
+	<!--$http-->
+	<script src="js/vue.js"></script>
+	<script src="js/vue-resource.js"></script>
+	<script src="js/zepto.js"></script>
+	<script>
+		new Vue({
+			el: "#demo",
+			data: {
+				name: 'yao',
+				que: '姚明'
+			},
+			methods: {
+				getData: function() {
+					var self = this;
+					$.ajax({
+						type: 'GET',
+						url: 'turing.php',
+						data: {
+							que: self.que
+						},
+						success: function(data) {
+							console.log(JSON.parse(data))
+							self.name = JSON.parse(data).text;
+						}
+					})
+				},
+				getDataa: function() {
+					console.log(this)
+					this.$http.get('turing.php', {
+						params: {
+							que: this.que
+						}
+					}).then(function(data) {
+						console.log(data)
+						this.name = data.data.text
+					}, function(err) {
+
+					})
+				}
+			},
+			ready: function() {
+				this.getData();
+				this.getDataa();
+				$('#demo').addClass('red')
+			}
+		})
+	</script>
+
+</html>

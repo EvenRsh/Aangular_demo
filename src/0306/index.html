@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="demo">
+			<p>{{name}}</p>
+			
+			<p>{{obj.a}}</p>
+			
+			<p>{{arr[1]}}</p>
+			
+			<!--算术运算-->
+			<p>{{number+3}}</p>
+			<!--字符串拼接-->
+			<p>{{name+obj.a}}</p>
+			<!--三元表达式-->
+			<p>{{bool?'真的':'假的'}}</p>
+			
+			<input v-model="name" />
+			<!--在标签的属性里面放表达式-->
+			<p name="{{name}}">{{name}}</p>
+			
+			<button @click="test()">test</button>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		//var app = angular.module('wApp',[])
+		//构造器
+		var app = new Vue({
+			el:'#demo',//element 元素
+			//$scope
+			data:{
+				name:'xie',
+				obj:{
+					a:'yi',
+					b:'yao'
+				},
+				arr:['a','b','c'],
+				number:8,
+				bool:false
+			},
+			methods:{
+				test:function(){
+					console.log('test')
+				}
+			}
+		})
+	</script>
+</html>

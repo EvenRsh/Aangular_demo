@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="demo">
+			<input v-model="name" />
+			<p>{{name}}</p>
+			<p>{{xie}}</p>
+			<p>{{name+name2}}</p>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'hello',
+				name2:'world',
+				xie:'abc'
+			},
+			//计算属性 vuex
+			computed: {
+				xie: function() {
+					return this.name + this.name2
+				}
+			},
+		})
+	</script>
+
+</html>

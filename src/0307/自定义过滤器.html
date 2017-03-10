@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="js/vue.js"></script>
+	<body id="demo">
+		<!--{{|orderBy 'name' -1}}-->
+		{{name|ed 'name' 2 true}}
+		{{name|ing}}
+	</body>
+	<script>
+		/*
+		 * angular
+		 * var app = angular.module('fApp',[]);
+		app.filter('ed',function(){
+			return function(input){
+				return input+ed
+			}
+		})*/
+		//自定义过滤器
+		Vue.filter('ed',function(input,params1,params2,params3){
+			console.log(params1,params2,params3)
+			return input+'ed'
+		})
+		new Vue({
+			el:'#demo',
+			data:{
+				name:'yao'
+			},
+			filters:{
+				ing:function(input){
+					return input+"ing";
+				}
+			}
+		})
+	</script>
+</html>

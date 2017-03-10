@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<!--v-bind:style="{}";
+			v-bind:class="{}";
+			ng-class="{}"
+			ng-style="{}"-->
+			<p v-touch="{name:name,test:test}">{{name}}</p>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'yao',
+				skill: 'ps'
+			},
+			methods: {
+				test: function(name) {
+					console.log(name)
+				}
+			},
+			filters: {},
+			directives: {
+				touch: function(value) {
+					console.log(this.vm.skill)
+					console.log(value)
+					value.test(value.name)
+					var xStart, xEnd, yStart, yEnd;
+					this.el.addEventListener("touchstart", function(e) {
+						xStart = e.changedTouches[0].pageX;
+						yStart = e.changedTouches[0].pageY;
+					})
+					this.el.addEventListener("touchend", function(e) {
+						xEnd = e.changedTouches[0].pageX;
+						yEnd = e.changedTouches[0].pageY;
+						console.log(xStart, xEnd, yStart, yEnd)
+						direction(xStart, xEnd, yStart, yEnd)
+					})
+
+					function direction(xStart, xEnd, yStart, yEnd) {
+						console.log(xStart, xEnd, yStart, yEnd)
+						if(Math.abs(xStart - xEnd) > Math.abs(yStart - yEnd)) {
+							//left or right
+							if(xStart > xEnd) {
+								console.log("left")
+							} else {
+								console.log("right")
+							}
+						} else {
+							if(yStart > yEnd) {
+								console.log("up")
+							} else {
+								console.log("down")
+							}
+						}
+					}
+
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		//H5定位 这个定位信息来自于谷歌服务
+		window.navigator.geolocation.getCurrentPosition(function(data){
+			console.log(data)
+		},function(data){
+			console.log(data)
+		})
+		console.log(window.navigator)
+	</script>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<!--<div ng-view=""></div>-->
+		</div>
+	</body>
+	<template id="app">
+		<!--一个组件只能有一个根节点，就是最外层要有一个div包裹着-->
+		<div>
+			<!--跟angular不同在於angular路由是#/a vue是#!/a-->
+			<a href="#!/a">a</a>
+			<a href="#!/b">b</a>
+			<!--这里相当于 angular的ng-view和ui-view-->
+			<!--<div ng-view=""></div>
+		<div ui-view=""></div>-->
+			<router-view></router-view>
+		</div>
+	</template>
+	<script src="js/vue.js"></script>
+	<!--vue-router要在vue之后引入-->
+	<script src="js/vue-router.js"></script>
+	<script>
+		//空的組件
+		/*var App = {}
+		var Foo = {
+			template: '<p>This is foo!</p>'
+		}
+
+		var Bar = {
+			template: '<p>This is bar!</p>'
+		}*/
+		//new Vue === App
+		//使用路由引入插件
+		Vue.use(VueRouter)
+			//这里App组件的作用相当于当时我们var demo = new Vue({el:'#demo'})其实demo就是一个特殊的组件
+		var App = Vue.extend({
+			//html css
+			template: '#app',
+		});
+		//定义foo组件，注意这里未定义，我们在后面路由使用的时候在注册使用
+		var Foo = Vue.extend({
+				//html css 视图层view
+				template: '<p>{{name}}</p>',
+				//js 逻辑层model
+				data: function() {
+					return {
+						name: 'yao'
+					}
+				}
+			})
+			//创建Bar组件
+		var Bar = Vue.extend({
+				template: '<p>This is bar!</p>'
+			})
+			//app.config('$routerProvider')
+			//
+		//实例化router
+		var router = new VueRouter();
+		//定义路由
+		router.map({
+			'/a': {
+				//注册foo组件
+				component: Foo
+			},
+			'/b': {
+				component: Bar
+			}
+		})
+		//默认进入到/a路由
+		router.redirect({
+			'*':'/a'
+		})
+		//把路由加载到demo节点，并以App组件为容器
+		router.start(App, '#demo')
+	</script>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="cApp">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div ng-controller="indexCtrl"></div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-cookie.js"></script>
+	<script>
+		var app = angular.module('cApp',['ngCookies']);
+		app.controller('indexCtrl',function($cookieStore){
+			//
+			$cookieStore.put('name','abcd');
+			console.log($cookieStore.get('name'));
+			//$cookieStore.remove('name')
+		})
+	</script>
+</html>

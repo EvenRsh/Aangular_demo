@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--
+			v-
+			ng-
+		-->
+		<!--<div ng-touch></div>
+		<xheader ng-touch></xheader>
+		<ng-touch></ng-touch>-->
+		<div id="demo">
+			<p v-click:hello="testtest" :a="name" b="abc">{{name}}</p>
+			<i v-touch="{color:'white',text:'hello!',func:testtest}">{{name}}</i>
+		</div>
+		<div id="demo2">
+			<!--<p v-click>{{name}}</p>-->
+			<i>{{name}}</i>
+		</div>
+	</body>
+	<!--
+		组件跟指令混在一起了
+	-->
+	<script>
+		/*app.directive('ngTouch',function(){
+							return {
+								//template:,
+								link:function(scope,ele,attr){
+									ele.addClass()
+								}
+							}
+						})*/
+	</script>
+	<script src="js/vue.js"></script>
+	<script src="js/zepto.js"></script>
+	<script>
+		//1.Vue.directive定义指令 第一个参数是指令的名字,配合指令在dom节点上以v-(指令名)呈现
+		//2.把指令v-xxx绑定到dom节点上
+		
+		Vue.directive('click', {
+			params: ['a','b'],
+			bind: function() {
+				console.log(this.params);
+				this.el.addEventListener('click', function() {
+					console.log('abc')
+				})
+				console.log(this.modifiers)
+				console.log(this.arg)
+					//link:attr
+				this.expression
+					//link:scope
+				this.vm[this.expression]();
+
+				//link:ele
+				//this.el.style.color = 'blue';
+				$(this.el).css('color', 'red')
+			}
+		}) 
+		Vue.directive('touch',function(value){
+			console.log(value)
+			value.func()
+		})
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'xie'
+			},
+			methods: {
+				testtest: function() {
+					console.log('testtest')
+				}
+			},
+			ready: function() {
+				console.log(this)
+			}
+		})
+
+		new Vue({
+			el: '#demo2',
+			data: {
+				name: 'yao'
+			},
+			ready: function() {
+				console.log(this)
+			}
+		})
+	</script>
+
+</html>

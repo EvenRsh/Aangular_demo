@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<title></title>
+	</head>
+	<!--设置地图样式-->
+	<style>
+		html {
+			height: 100%
+		}
+		
+		body {
+			height: 100%;
+			margin: 0px;
+			padding: 0px
+		}
+		
+		#container {
+			height: 100%
+		}
+	</style>
+
+	<body>
+		<div id="container"></div>
+	</body>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=yA2OiAD3q3ntTH1TQF5IWaSg598p3bQX"></script>
+	<script>
+		var map = new BMap.Map("container");
+		window.navigator.geolocation.getCurrentPosition(function(data) {
+			console.log(data.coords)
+			var point = new BMap.Point(data.coords.longitude, data.coords.latitude);
+			map.centerAndZoom(point, 15);
+		}, function(data) {
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(data) {
+				console.log(data)
+				var point = new BMap.Point(data.longitude, data.latitude);
+				map.centerAndZoom(point, 15);
+			}, function(err) {})
+		})
+	</script>
+
+</html>

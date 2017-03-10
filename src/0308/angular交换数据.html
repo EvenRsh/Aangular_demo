@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="sApp">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div ng-controller="indexCtrl">
+			<p>{{name}}</p>
+		</div>
+		<div ng-controller="index2Ctrl">
+			<p>{{name}}</p>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('sApp',[]);
+		app.controller('indexCtrl',function($scope,auex){
+			$scope.name = 'yao'
+			auex.state.name = $scope.name;
+		})
+		app.controller('index2Ctrl',function($scope,auex){
+			$scope.name = auex.state.name
+		})
+		app.service('auex',function(){
+			return {
+				state:{}
+			}
+		})
+	</script>
+</html>

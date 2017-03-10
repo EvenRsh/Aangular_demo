@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'yao'
+			},
+			method: {
+
+			},
+			//filters
+			//directives
+			components: {
+				xcontainer: {
+					template: '<div>container</div>',
+				},
+
+			}
+		})
+		Vue.component('xheader', {
+			template: '<div style="color:red">header{{name}}<child></child></div>',
+			data: function() {
+				return {
+					name: 'yao'
+				}
+			},
+			methods: {
+				test: function() {
+					alert('test')
+				}
+			},
+			ready: function() {
+				//this.test()
+			}
+		})
+	</script>
+
+</html>

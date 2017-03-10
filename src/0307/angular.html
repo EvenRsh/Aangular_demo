@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="wscat">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<p>{{name}}</p>
+		</div>
+		<div ng-controller="index2Ctrl">
+			<p>{{name}}</p>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('wscat', []);
+		var tool2 = {
+			add: function(a, b) {
+				return a + b
+			}
+		}
+		app.controller('indexCtrl', function($scope, $http, tool) {
+			$scope.name = 1;
+			console.log(tool2)
+		})
+		app.controller('index2Ctrl', function($scope, $http, tool) {
+			$scope.name = 2;
+		})
+		app.service('tool', function() {
+			return {
+				add: function(a, b) {
+					return a + b
+				}
+			}
+		})
+	</script>
+
+</html>

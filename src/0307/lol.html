@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<script src="js/jquery-3.1.1.min.js"></script>
+	<body>
+		<form id="form1" runat="server">
+			<div>
+				<script>
+					jQuery().ready(function() {
+						$.ajax({
+							url: "http://lolapi.games-cube.com/UserArea?keyword=asd",
+							type: "GET",
+							headers: {
+								"DAIWAN-API-TOKEN": "B1F35-F4594-1103F-CBF4F"
+							},
+							success: function(result) {
+								alert(JSON.stringify(result));
+							}
+						});
+					});
+				</script>
+			</div>
+		</form>
+
+</html>

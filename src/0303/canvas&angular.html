@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="wApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		canvas {
+			width: 500px;
+			height: 250px;
+		}
+	</style>
+
+	<body>
+		<div ng-controller="indexCtrl">
+			<!--<canvas id="canvas"></canvas>-->
+		</div>
+		<div ng-controller="index2Ctrl">
+			<!--<canvas id="canvas2"></canvas>-->
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('wApp', []);
+		app.controller('indexCtrl', ['$scope', '$interval', '$document', '$http', 'canvass', function($scope, $interval, $document, $http, canvass) {
+			$scope.name = 'yao';
+			/*var canvas = $document[0].getElementById('canvas');
+			var cans = canvas.getContext('2d');
+			var offset = 0;
+			cans.beginPath();
+			cans.moveTo(0, 0);
+			$interval(function() {
+				$http.jsonp('ramdom.php', {
+					params: {
+						callback: "JSON_CALLBACK"
+					}
+				}).success(function(data) {
+					console.log(data)
+					offset += 5
+					cans.lineTo(offset, data);
+					cans.stroke();
+				})
+			}, 1000)*/
+			var cans = canvass.canvas('indexCtrl',{
+				color:'red'
+			})
+			
+			
+			var offset = 0;
+			$interval(function() {
+				$http.jsonp('ramdom.php', {
+					params: {
+						callback: "JSON_CALLBACK"
+					}
+				}).success(function(data) {
+					console.log(data)
+					offset += 5
+					cans.lineTo(offset, data);
+					cans.stroke();
+				})
+			}, 1000)
+		}])
+		app.controller('index2Ctrl',function(canvass){
+			canvass.create('index2Ctrl')
+		})
+		app.service('canvass', function($document) {
+			return {
+				create: function(ctrl) {
+					var can = $document[0].querySelector('[ng-controller=' + ctrl + ']')
+					var canvas = $document[0].createElement('canvas');
+					can.appendChild(canvas)
+					canvas.id = ctrl+'_Canvas'
+					return canvas;
+				},
+				canvas:function(ctrl,params){
+					var canvas = this.create(ctrl);
+					var cans = canvas.getContext('2d');
+					cans.beginPath();
+					cans.moveTo(0, 0);
+					cans.strokeStyle = params.color
+					return cans
+				}
+			}
+		})
+	</script>
+
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<p style="color: red;">v-text</p>
+			<p>{{name}}</p>
+			<p v-text="name"></p>
+			<!--ng-bind-->
+
+			<p style="color: red;">v-html</p>
+			<div>{{{html}}}</div>
+			<div v-html="html"></div>
+
+			<p style="color: red;">v-model</p>
+			<input v-model="inp" />
+			<select v-model="sel">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+			</select>
+			<textarea v-model="tex"></textarea>
+			<button @click="showModel()">showModel</button>
+
+			<!--ng-show ng-hide-->
+			<p style="color: red;">v-show</p>
+			<p v-show="bool">hello world</p>
+			<button @click="bool=!bool">Ok</button>
+
+			<!--ng-if-->
+			<p style="color: red;">v-if</p>
+			<p v-if="bool2">hello</p>
+			<p v-else>world</p>
+			<button @click="bool2=!bool2">Ok</button>
+
+			<p style="color: red;">v-bind:style</p>
+			<input v-model="size" type="range" />
+			<p v-bind:style="{'fontSize':size+'px'}">hello world</p>
+
+			<!--ng-repeat-->
+			<p style="color: red;">v-for</p>
+			<ul>
+				<li v-for="arr in arrs">{{arr.name}}</li>
+			</ul>
+			<select>
+				<option></option>
+			</select>
+			<table>
+				<tr></tr>
+			</table>
+
+			<p style="color: red;">v-bind:</p>
+			<!--ng-src-->
+			<img style="width: 100%;" v-bind:src="url" />
+			<img style="width: 100%;" :src="url" />
+			<!--ng-href-->
+			<a v-bind:href="url">{{url}}</a>
+			<a :href="url">{{url}}</a>
+			<!--ng-class-->
+			<p v-bind:class="{'red':bool3}">red</p>
+			<p :class="{'red':bool3}">red</p>
+			<button @click="bool3=!bool3">Ok</button>
+			<p :name="name" :id="name+'_id'">{{name}}</p>
+			<style>
+				.red{
+					color: red;
+				}
+			</style>
+			
+			<p style="color: red;">v-on:</p>
+			<button v-on:click="test()">test</button>
+			<button @click="test()">test</button>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		var data = {
+			el: '#demo',
+			data: {
+				name: 'yao',
+				html: '<p>123<span>456</span></p>',
+				inp: '',
+				sel: '',
+				tex: '',
+				bool: false,
+				size: 20,
+				bool2: false,
+				bool3:true,
+				arrs: [{
+					name: 'yao'
+				}, {
+					name: 'xie'
+				}, {
+					name: 'lan'
+				}],
+				url: 'img/1.jpg'
+			},
+			methods: {
+				showModel: function() {
+					this.test();
+					console.log(this);
+					console.log(this.inp, this.sel, this.tex);
+				},
+				test: function() {
+					console.log('test')
+				},
+				t: function() {
+					console.log('t')
+				}
+			},
+			ready: function() {
+				this.t();
+			}
+		}
+		var demo = new Vue(data);
+		/*console.log(demo)
+		demo.t();*/
+	</script>
+
+</html>

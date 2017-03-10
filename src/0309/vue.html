@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<!--ng-app-->
+		<div id="demo">
+			<xheader :name="name"></xheader>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'yao'
+			},
+			methods: {
+
+			},
+			components: {
+				xheader: {
+					props: ['name'],
+					template: '<div>xheader{{name}}</div><xfooter></xfooter>',
+					data: function() {
+						return {}
+					},
+					methods: {
+
+					},
+					components: {
+						xfooter: {
+							template: "<div>xfooter</div>"
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

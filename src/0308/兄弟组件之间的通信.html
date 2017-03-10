@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<xheader></xheader>
+			<xfooter></xfooter>
+		</div>
+	</body>
+	<!--weui+bootstrap+ionic+amazui-->
+	<!--js es6 as as-->
+	<template id="xheader">
+		<div style="border:1px solid #666">
+			<input v-model="name" @keyup="setData()" />
+			<p>{{name}}</p>
+			<p>{{exchange}}</p>
+			<button @click="setData()">Ok</button>
+		</div>
+	</template>
+	<script src="js/vue.js"></script>
+	<script src="js/vuex.js"></script>
+	<script>
+		//定义状态管理的地方 vuex特殊的服务
+		var store = new Vuex.Store({
+			//状态
+			state: {
+				exchange: '测试',
+				name: '',
+			},
+			//转变 设置值的方法
+			mutations: {
+				setExchange: function(state, data) {
+					state.exchange = data
+				},
+				setName: function(state, data) {
+					state.name = data
+				},
+			},
+			getters: {
+				getExchange: function(state) {
+					return state.exchange
+				}
+			},
+			actions: {
+				setEx: function(context, data) {
+					//context.commit('setName');
+				}
+			}
+		})
+
+		new Vue({
+			el: '#demo',
+			data: {},
+			components: {
+				xheader: {
+					store: store,
+					template: "#xheader",
+					data: function() {
+						return {
+							name: 'yi'
+
+						}
+					},
+					computed: {
+						exchange: function() {
+							//state
+							//return this.$store.state.exchange
+							//getters
+							return this.$store.getters.getExchange
+						}
+					},
+					methods: {
+						setData: function() {
+							//action
+							this.$store.dispatch("setEx", this.name)
+							//mutations   this.$store.commit 设置$store值的方法
+							this.$store.commit('setExchange', this.name)
+						}
+					}
+				},
+				xfooter: {
+					store: store,
+					template: "<p>{{name}}<p><p>{{exchange}}</p>",
+					data: function() {
+						return {
+							name: 'yao'
+						}
+					},
+					computed: {
+						exchange: function() {
+							//this.$store.state获取$store的方法
+							return this.$store.state.exchange
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

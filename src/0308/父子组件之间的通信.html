@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<!--angular+ng-router+ui-router+ionic+weui+-->
+	<!--vue+vuex+vue-router+vue-resource+webpack+es6-->
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<div style="border:1px solid #666">
+				<xheader :a="name" b="abc"></xheader>
+			</div>
+			<div style="border:1px solid #666">
+				<xheader :a="name" b="abc"></xheader>
+			</div>
+			<div style="border:1px solid #666">
+				<xheader :a="name" b="abc"></xheader>
+			</div>
+			<!--<xheader :a="2"></xheader>-->
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		Vue.component('xchild', {
+			props: ['a'],
+			template: "<p>child{{a}}</p>"
+		})
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'father'
+			},
+			components: {
+				xheader: {
+					props: ['a', 'b'],
+					template: '<input v-model="name" /><p>{{name}}</p><xchild :a="name"></xchild>',
+					data: function() {
+						return {
+							name: 'abc'
+						}
+					},
+					ready: function() {
+						if(this.a) {
+
+						}
+					}
+				}
+			}
+		})
+	</script>
+
+</html>

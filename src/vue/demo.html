@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>demo</title>
+    <link rel="stylesheet" type="text/css" href="font_xtt6vd36f4unmi/demo.css">
+    <link rel="stylesheet" type="text/css" href="font_xtt6vd36f4unmi/iconfont.css">
+    <!-- <script type="text/javascript" src="js/vue1.0.js"></script> -->
+    <!-- <script type="text/javascript" src="js/vue-router.js"></script> -->
+    <!-- <script src="https://cdn.rawgit.com/chrisvfritz/5f0a639590d6e648933416f90ba7ae4e/raw/98739fb8ac6779cb2da11aaa9ab6032e52f3be00/currency-validator.js"></script> -->
+</head>
+
+<body>
+    <!-- <i class="icon iconfont icon-map__easyiconnet"></i> -->
+    <div id="app">
+        
+        <!-- <input type="text" v-model="name" name="">
+        <p :name="name" v-text="name"></p>
+        <button @click="bool=!bool">OK</button>
+        <p v-if="bool">hello</p>
+        <p v-else>world</p>
+        <button @click="test()">OK</button>
+        <p :style="{'color':'blue'}" v-for="arr in arrs" v-text="arr.a"></p>
+        <p v-abc:click="t">12123</p>
+        <br>
+        <xheader></xheader>
+        <demo></demo>
+        <temp></temp>
+        <container></container> -->
+    </div>
+    <div id="demo">
+        <router-view></router-view>
+    </div>
+</body>
+<script type="text/javascript" src="js/vue1.0.js"></script>
+<script type="text/javascript" src="js/vue-router1.0.js"></script>
+<template id="temp">
+    <div>template</div>
+</template>
+<script type="text/javascript">
+//引用插件
+Vue.use(VueRouter);
+var App = Vue.extend({});
+var Foo = Vue.extend({
+    template:"<p>Foo</p>"
+});
+var Bar = Vue.extend({
+     template:"<p>Bar</p>"
+});
+var router = new VueRouter();
+router.map({
+        "/a":{
+            component:Foo
+        },
+        "/b":{
+            component:Bar
+        }
+});
+//重定向
+router.redirect({
+    "*":"/a"
+})
+router.start(App,"#demo");
+   /* Vue.directive('abc',{
+        params:['a'],
+        bind:function(){
+            console.log(this);
+            this.el.addEventListener('touchstart',this.vm[this.expression])
+        }
+    })
+    //先定义(可全局可局部)
+    var demo = Vue.extend({
+        template:"<div>demo_extend</div>"
+    });
+    var temp = Vue.extend({
+        template:"#temp"
+    });
+    Vue.component("temp",temp)
+    //注册
+    Vue.component("demo",demo);
+
+    //定义,注册一起使用的(全局定义组件)
+    Vue.component('xheader',{
+        template:"<div>第一组件</div><demo></demo>"
+    })
+var vm = new Vue({
+    el: "#app",
+    data: {
+        bool:false,
+        name: "abc",
+        arrs:[{a:1},{a:2},{a:3}]
+    },
+    methods: {
+        test(){
+            // var that = this;
+            // vm = this;
+            // console.log(vm);
+            this.name = Math.random() * 100;
+        },
+        t(){
+            console.log('texf');
+        }
+    },
+    components:{
+        demo:demo,
+        container:{
+            template:"<div>container</div>"
+        }
+    },
+    ready(){
+        this.t();
+    }
+});*/
+</script>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button onclick="jsonp('jsonp.php')">JSONP</button>
+	</body>
+	<script>
+		function jsonp(url){
+			var script = document.createElement('script');
+			script.src = url;
+			document.body.appendChild(script)
+		}
+	</script>
+	<script>
+		function JSON_ccc(data){
+			console.log(data)
+			return data
+		}
+	</script>
+	<link href=""  />
+	<img src=""  />
+	<!--<script src="jsonp.php"></script>-->
+	
+	<!--<script src="https://wscats.github.io/angular-demo/jsonp.js">
+	</script>-->
+	
+	<!--<script src="https://code.jquery.com/jquery-1.11.3.js">
+	</script>-->
+</html>

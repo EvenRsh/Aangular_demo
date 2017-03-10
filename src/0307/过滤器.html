@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<p style="color: red;">lowercase</p>
+			<p>{{str|lowercase}}</p>
+
+			<p style="color: red;">uppercase</p>
+			<p>{{str|uppercase}}</p>
+
+			<p style="color: red;">capitalize</p>
+			<p>{{str|capitalize}}</p>
+
+			<p style="color: red;">currency</p>
+			<p>{{num|currency '￥' 2}}</p>
+
+			<p style="color: red;">json</p>
+			<p>{{obj|json}}</p>
+
+			<p style="color: red;">pluralize</p>
+			<p>{{str|pluralize obj.name}}</p>
+
+			<p style="color: red;">orderBy</p>
+			<select v-model="sort">
+				<option value="age">age</option>
+				<option value="name">name</option>
+			</select>
+			<button @click="sort2=-sort2">Ok</button>
+			<ul>
+				<li v-for="arrr in arrrs|orderBy sort sort2">{{arrr.name}} {{arrr.age}}</li>
+			</ul>
+
+			<p style="color: red;">filterBy</p>
+			<input v-model="searchName" />
+			<!--filterBy 搜索值 对象的属性值-->
+			<ul>
+				<li v-for="arrr in arrrs|filterBy searchName in 'name'">{{arrr.name}} {{arrr.age}}</li>
+			</ul>
+
+			<p style="color: red;">limitBy</p>
+			<p>{{str|limitBy 3 0}}</p>
+			<!--limitBy 截取数组的长度 截取的起始值-->
+			<ul>
+				<li v-for="arrr in arrrs|limitBy 2 start">{{arrr.name}} {{arrr.age}}</li>
+			</ul>
+
+			<button @click="next()">Next</button>
+			<button @click="pre()">Pre</button>
+		</div>
+	</body>
+	<script src="js/vue.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				start: 0,
+				searchName: '',
+				sort: 'age',
+				sort2: 1,
+				str: 'abCdEf',
+				arrs: ['single', 'double', 'triple', 'multiple'],
+				num: 12345,
+				obj: {
+					name: 'xie',
+					skill: 'ps'
+				},
+				arrrs: [{
+					name: 'xie',
+					age: 18
+				}, {
+					name: 'yi',
+					age: 16
+				}, {
+					name: 'lan',
+					age: 17
+				}, {
+					name: 'yao',
+					age: 17
+				}]
+			},
+			methods: {
+				next: function() {
+					this.start += 2
+				},
+				pre: function() {
+					this.start -= 2
+				}
+			}
+		})
+	</script>
+
+</html>

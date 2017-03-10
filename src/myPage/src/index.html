@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+	<title>Even Rsh 青春无极限</title>
+	
+	<script type="text/javascript" src="js/angular.js"></script>
+	<script type="text/javascript" src="js/angular-ui-router.js"></script>
+</head>
+<body>
+	<div ui-view=""></div>
+</body>
+	<script type="text/javascript">
+		var app = angular.module('myApp', ['routers','directives']);
+		var routers = angular.module('routers', ['ui.router']);
+		routers.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider) {
+			$urlRouterProvider.when('','/index/0');
+			$stateProvider.state('index',{
+				url:'/index',
+				templateUrl:'template/index.html'
+			})
+			.state('index.about',{
+				url:'/0',
+				templateUrl:'template/about.html'
+			})
+			.state('index.contact',{
+				url:'/1',
+				templateUrl:'template/contact.html'
+			})
+			.state('index.works',{
+				url:'/2',
+				templateUrl:'template/works.html'
+			})
+		}]);
+		var directives = angular.module('directives', []);
+		directives.directive('wheader',[function(){
+			return {
+				templateUrl:"directive/wheader.html"
+			}
+		}])
+		.directive('warticle',[function(){
+			return {
+				templateUrl:"directive/warticle.html"
+			}
+		}])
+		.directive('wfooter',[function(){
+			return {
+				templateUrl:"directive/wfooter.html"
+			}
+		}])
+		;
+	</script>
+</html>

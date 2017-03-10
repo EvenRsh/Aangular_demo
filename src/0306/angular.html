@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="aApp">
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div ng-controller="demoCtrl">
+			<input ng-model="name" />
+			<p name="{{name}}">{{name}}</p>
+			<button ng-click="test()">Ok</button>
+			<div ng-bind-html="html"></div>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script>
+		var app = angular.module('aApp',[]);
+		app.controller('demoCtrl',function($scope,$sce){
+			$scope.name = 'yao';
+			$scope.html = $sce.trustAsHtml('<p>123<span>456</span></p>');
+			$scope.test  = function(){
+				console.log('test')
+			}
+			$scope.test();
+		})
+	</script>
+</html>

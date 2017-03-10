@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="cApp">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+	</head>
+	<body>
+		<div ng-controller="indexCtrl">
+			<p id="p">123</p>
+			<p ng-swipe-left="left()">123</p>
+			<p ng-swipe-right="right()">123</p>
+		</div>
+	</body>
+	<script src="js/angular.js"></script>
+	<script src="js/angular-touch.js"></script>
+	<script>
+		var app = angular.module('cApp',['ngTouch']);
+		app.controller('indexCtrl',function($swipe,$scope){
+			console.log($swipe)
+			var ele  = angular.element(document.querySelector('#p'))
+			$scope.left = function(){
+				console.log("left")
+			}
+			$scope.right = function(){
+				console.log("right")
+			}
+			$swipe.bind(ele,{
+				'start':function(e){
+					console.log('start:');
+					console.log(e)
+				},
+				'move':function(e){
+					console.log('move:')
+					console.log(e)
+				}
+			})
+		})
+	</script>
+</html>

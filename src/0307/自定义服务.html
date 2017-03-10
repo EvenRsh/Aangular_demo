@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo1">
+			<p>{{name}}</p>
+			<button @click="test(1)">Ok</button>
+		</div>
+		<div id="demo2">
+			<p>{{name}}</p>
+			<button @click="test(2)">Ok</button>
+		</div>
+	</body>
+	<!--<script src="js/angular.js"></script>-->
+	<script src="js/vue.js"></script>
+	<script>
+		/*var app = angular.module('sApp',[]);
+								app.controller('indexCtrl',function($http))
+								app.factory();
+								app.value();
+								app.constant;
+								app.service('',function(){
+								})*/
+		var Click = function() {
+			console.log('test')
+		}
+		var test = function(data) {
+				console.log(data)
+			}
+			//vue-resource
+		var name = 'yao'
+		new Vue({
+			el: '#demo1',
+			data: {
+				name: name
+			},
+			methods: {
+				Click: Click,
+				test: test
+			},
+			ready: function() {
+				this.test(this.name)
+			}
+		})
+		new Vue({
+			el: '#demo2',
+			data: {
+				name: name
+			},
+			methods: {
+				Click: Click,
+				test: test
+			}
+		})
+	</script>
+
+</html>

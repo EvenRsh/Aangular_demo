@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo" style="border: 1px solid #0000CC;">
+			<p>{{name}}</p>
+			<xheader></xheader>
+			<xcontainer></xcontainer>
+			<xfooter></xfooter>
+		</div>
+		<div id="demo2" style="border: 1px solid #0000CC;">
+			<xheader></xheader>
+			<xcontainer></xcontainer>
+			<xfooter></xfooter>
+		</div>
+	</body>
+	<!--<script type="text/template" id="child">
+		<div>child12</div>
+	</script>-->
+	<template id="child">
+		<div>child1234</div>
+		<div>123</div>
+	</template>
+	<!--分治-->
+	
+	<script src="js/vue.js"></script>
+	<script>
+		//		ng-app ng-controller
+		/*app.direvtive('',function(){
+						return {
+							templateUrl:
+						}
+					})*/
+		//先定义
+		var xfooter = Vue.extend({
+			template: '<div>footer</div>'
+		})
+		var child = Vue.extend({
+				template: '#child'
+			})
+			//再注册
+			//Vue.component('xfooter', xfooter)
+		Vue.component('child', child)
+			//注册和定义一起结合写
+		Vue.component('xheader', {
+			template: '<div style="color:red">header{{name}}<child></child></div>',
+			data: function() {
+				return {
+					name: 'yao'
+				}
+			},
+			methods: {
+				test: function() {
+					alert('test')
+				}
+			},
+			ready: function() {
+				//this.test()
+			}
+		})
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'yao'
+			},
+			method: {
+
+			},
+			//filters
+			//directives
+			components: {
+				xcontainer: {
+					template: '<div>container</div>',
+					data:function(){
+						return {
+							
+						}
+					}
+				},
+
+			}
+		})
+		new Vue({
+			el: '#demo2',
+			data: {
+				name: 'yao'
+			},
+			components: {
+				xfooter: xfooter
+			}
+		})
+	</script>
+
+</html>

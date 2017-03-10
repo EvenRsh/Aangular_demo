@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>map_根据起终点名称查询公交换乘_弹跳覆盖物_右键放大缩小</title>
+    <style type="text/css">
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    
+    #l-map {
+        height: 300px;
+        width: 100%;
+    }
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4QE14vhWyihxKnkTYOKoyNB9B2qOkRnh"></script>
+    <script type="text/javascript" src="../js/angular.js"></script>
+</head>
+
+<body>
+    <div ng-controller="indexCtrl">
+        <!-- <p>{{a}}</p> -->
+        <div id="l-map"></div>
+        <input type="text" ng-model="start" name="">
+        <input type="text" ng-model="end" name="">
+        <div id="driving_way">
+            <select ng-model="drivingWay">
+                <option value="0">最少时间</option>
+                <option value="1">最少换乘</option>
+                <option value="2">最少步行</option>
+                <option value="3">不乘地铁</option>
+            </select>
+            <input type="button" ng-click="busSearch()" id="result" value="查询" />
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+var app = angular.module('mApp', []);
+app.controller('indexCtrl', ['$scope', '$window', function($scope, $window) {
+    // $scope.a = "123";
+    $scope.start = "广州天河智汇创意园";
+    $scope.end = "广州天河汽车客运站";
+    var map = new BMap.Map("l-map");
+    $window.navigator.geolocation.getCurrentPosition(function(data) {
+        // 百度地图API功能
+        console.log(data)
+        var point = new BMap.Point(data.coords.longitude, data.coords.latitude);
+        map.centerAndZoom(point, 14);
+        var marker = new BMap.Marker(point); // 创建标注
+        map.addOverlay(marker); // 将标注添加到地图中
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        var routePolicy = [BMAP_TRANSIT_POLICY_LEAST_TIME, BMAP_TRANSIT_POLICY_LEAST_TRANSFER, BMAP_TRANSIT_POLICY_LEAST_WALKING, BMAP_TRANSIT_POLICY_AVOID_SUBWAYS];
+        var transit = new BMap.TransitRoute(map, {
+            renderOptions: {
+                map: map
+            },
+            policy: 0
+        });
+
+        function search(start, end, route) {
+            transit.setPolicy(route);
+            transit.search(start, end);
+        }
+        $scope.busSearch = function() {
+            map.clearOverlays();
+            // var i=$("#driving_way select").val();
+            search($scope.start, $scope.end, routePolicy[$scope.drivingWay]);
+        };
+        var menu = new BMap.ContextMenu();
+        var txtMenuItem = [{
+            text: '放大',
+            callback: function() {
+                map.zoomIn()
+            }
+        }, {
+            text: '缩小',
+            callback: function() {
+                map.zoomOut()
+            }
+        }];
+        for (var i = 0; i < txtMenuItem.length; i++) {
+            menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+        }
+        map.addContextMenu(menu);
+    }, function(err) {
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(data) {
+            var point = new BMap.Point(data.longitude, data.latitude);
+            var marker = new BMap.Marker(point); // 创建标注
+            map.addOverlay(marker); // 将标注添加到地图中
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            map.centerAndZoom(point, 14);
+            var routePolicy = [BMAP_TRANSIT_POLICY_LEAST_TIME, BMAP_TRANSIT_POLICY_LEAST_TRANSFER, BMAP_TRANSIT_POLICY_LEAST_WALKING, BMAP_TRANSIT_POLICY_AVOID_SUBWAYS];
+            var transit = new BMap.TransitRoute(map, {
+                renderOptions: {
+                    map: map
+                },
+                policy: 0
+            });
+
+            function search(start, end, route) {
+                transit.setPolicy(route);
+                transit.search(start, end);
+            }
+            $scope.busSearch = function() {
+                map.clearOverlays();
+                // var i=$("#driving_way select").val();
+                search($scope.start, $scope.end, routePolicy[$scope.drivingWay]);
+            };
+            var menu = new BMap.ContextMenu();
+            var txtMenuItem = [{
+                text: '放大',
+                callback: function() {
+                    map.zoomIn()
+                }
+            }, {
+                text: '缩小',
+                callback: function() {
+                    map.zoomOut()
+                }
+            }];
+            for (var i = 0; i < txtMenuItem.length; i++) {
+                menu.addItem(new BMap.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+            }
+            map.addContextMenu(menu);
+        }, function(er) {
+
+        })
+    });
+
+
+}])
+</script>
+
+</html>

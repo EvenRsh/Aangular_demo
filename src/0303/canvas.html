@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		canvas {
+			width: 500px;
+			height: 250px;
+			border: 1px solid #666;
+		}
+	</style>
+
+	<body>
+		<canvas id="canvas"></canvas>
+	</body>
+	<script>
+		//获取canvas的节点
+		var canvas = document.getElementById('canvas');
+		//ctx是一个画笔
+		var ctx = canvas.getContext('2d');
+		// 绿色矩形
+		ctx.beginPath();
+		ctx.lineWidth = "1";
+		ctx.strokeStyle = "red";
+		ctx.moveTo(0, 0);
+		var x = 0;
+		setInterval(function() {
+			x += 10;
+			ctx.lineTo(x, Math.random() * 125);
+			ctx.stroke();
+		}, 1000)
+	</script>
+
+</html>
