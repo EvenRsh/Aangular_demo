@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="wApp">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div ng-controller="indexCtrl">
+
+		</div>
+	</body>
+	<!--<script src="js/angular.js"></script>-->
+	<script>
+		/*var app = angular.module('wApp',[]);
+						app.controller('indexCtrl',function($http){
+							$http.get("test.php").success(function(data){
+								console.log(data)
+							})
+							console.log("start")
+						})*/
+		var data;
+
+		function ajax(url, callback) {
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					data = xmlhttp.responseText
+						//console.log(data)
+					callback(data)
+				}
+			}
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send()
+		}
+		ajax("test.php", function(data) {
+			console.log(data) //test
+				//但是异步函数最好配合回调函数
+			ajax("test2.php", function(data) {
+				console.log(data) //test2
+			})
+		})
+
+		//用了回调函数不一定是异步 // 是否定时器是否ajax setTimeout setInterval xmlhttprequest jsonp <script src  href >
+		function test(callback) {
+			callback(3)
+		}
+		test(function(data) {
+			console.log(data) //3
+		})
+	</script>
+
+</html>
